@@ -1,0 +1,19 @@
+.grid {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    
+    :hover {
+      cursor: pointer;
+    }
+}
+
+.buttons {
+  margin-bottom: 2vh;
+}
+
+.grid-row {
+  line-height: 0;
+}

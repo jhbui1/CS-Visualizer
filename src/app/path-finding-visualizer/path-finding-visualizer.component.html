@@ -1,0 +1,40 @@
+
+
+<div class="grid">
+    <div class="buttons">
+        <button (click)="this.visualizeDijkstra()"
+        [disabled]="needReset || animating"
+        > Visualize </button>
+    
+        <button (click)="this.reset()" 
+        [disabled]="animating"> 
+        Reset </button>
+    
+        <!-- <button (click)="this.stop()"
+        [disabled]="!animating">
+        Stop</button> -->
+        <label for="animeSpeed"> Speed:</label>
+        <select name="animeSpeed" [(ngModel)]="animeSpeed">
+            <option *ngFor="let option of animeSpeedOptions; last as last" 
+            [value]=option.value
+            > 
+                {{option.name}}
+            </option>
+        </select>
+    </div>
+ 
+    <div class="grid-row" #allNodes *ngFor="let row of grid; let last = last">
+        <app-node *ngFor="let node of row" 
+            [col]=node.col
+            [row]=node.row
+            [isStart]=node.isStart
+            [isFinish]=node.isFinish
+            [isWall]=node.isWall
+            (mousedown)="this.handleMouseDown(node.row,node.col)"
+            (mouseover)="this.handleMouseOver(node.row,node.col)"
+            (mouseup)="this.handleMouseUp()"
+        ></app-node>
+    </div>
+
+
+</div>
