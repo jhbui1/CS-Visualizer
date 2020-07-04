@@ -2,6 +2,13 @@
 
 <div class="grid">
     <div class="buttons">
+        <p> Start Node </p>
+        <div id="start-legend" class="node-legend"></div>
+        <P> End Node</P>
+        <div id="end-legend" class="node-legend"></div>
+        <p> Wall </p>
+        <div id="wall-legend" class="node-legend"></div>
+
         <button (click)="this.visualizeDijkstra()"
         [disabled]="needReset || animating"
         > Visualize </button>
@@ -13,14 +20,17 @@
         <!-- <button (click)="this.stop()"
         [disabled]="!animating">
         Stop</button> -->
-        <label for="animeSpeed"> Speed:</label>
-        <select name="animeSpeed" [(ngModel)]="animeSpeed">
+      
+        <p>Speed: </p>
+        <select class="select" name="animeSpeed" [(ngModel)]="animeSpeed">
+            <label for="animeSpeed"> Speed:</label>
             <option *ngFor="let option of animeSpeedOptions; last as last" 
             [value]=option.value
             > 
                 {{option.name}}
             </option>
         </select>
+      
     </div>
  
     <div class="grid-row" #allNodes *ngFor="let row of grid; let last = last">

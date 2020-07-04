@@ -6,76 +6,75 @@
 }
 
 .select {
-    color: white;
-    background-color:rgba(0,0,0,.85);
-    border-style: solid;
-    border: solid white;
-    border-width: .5vh .5vh;
-    padding:6.5vw;
-    width: 15vw;
-    height: 15vh;
-    margin-bottom: 2vh;
-  
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    text-align:center;
-    font-weight:bold;
-    font-size: 2vh;
-  }
-  .select:hover {
-    cursor: pointer;
-  }
-  
-  button, a.button {
-    display: inline-block;
-    width: 140px;
-    padding: 10px 10px;
-    margin-left: 10px;
+  color: white;
+  background-color:rgba(0,0,0,.85);
+  border-style: solid;
+  border: solid white;
+  // padding:6.5vw;
+  // width: 15vw;
+  // height: 15vh;
+  // margin-bottom: 2vh;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  text-align:center;
+  font-weight:bold;
+  font-size: 2vh;
+}
+.select:hover {
+  cursor: pointer;
+}
+
+button, a.button {
+  display: inline-block;
+  width: 140px;
+  padding: 10px 10px;
+  margin-left: 10px;
+  margin-right: 10px;
+  font-size: 0.85em;
+  font-weight: 700;
+  text-decoration: none;
+  text-align: center;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: opacity 0.5s;
+  outline: none;
+
+  @include medium-screen-landscape {
+    width: 160px;
+    margin-left: 0px;
     margin-right: 10px;
-    font-size: 0.85em;
-    font-weight: 700;
-    text-decoration: none;
-    text-align: center;
-    border: none;
-    border-radius: 50px;
-    cursor: pointer;
-    transition: opacity 0.5s;
-    outline: none;
-  
-    @include medium-screen-landscape {
-      width: 160px;
-      margin-left: 0px;
-      margin-right: 10px;
-    }
-  
-    @include large-screen-landscape {
-      margin-left: 0px;
-      margin-right: 20px;
-      width: 190px;
-    }
-  
-    @include high-res-screen-landscape {
-      padding: 15px 10px;
-      width: 250px;
-    }
-  
-    @include ultra-high-res-screen-landscape {
-      width: 290px;
-    }
-  
-    &.primary-button {
-      background-color: $primary-button-background-color;
-      color: $primary-button-text-color;
-    }
-  
-    &.secondary-button {
-      background-color: $secondary-button-background-color;
-      color: $secondary-button-text-color;
-    }
-  
-    &:hover {
-      opacity: 0.75;
-    }
+  }
+
+  @include large-screen-landscape {
+    margin-left: 0px;
+    margin-right: 20px;
+    width: 190px;
+  }
+
+  @include high-res-screen-landscape {
+    padding: 15px 10px;
+    width: 250px;
+  }
+
+  @include ultra-high-res-screen-landscape {
+    width: 290px;
+  }
+
+  &.primary-button {
+    background-color: $primary-button-background-color;
+    color: $primary-button-text-color;
+  }
+
+  &.secondary-button {
+    background-color: $secondary-button-background-color;
+    color: $secondary-button-text-color;
+  }
+
+  &:hover {
+    opacity: 0.75;
+  }
 }
