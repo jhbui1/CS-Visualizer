@@ -1,15 +1,10 @@
 
 
-<div class="grid">
-    <div class="buttons">
-        <p> Start Node </p>
-        <div id="start-legend" class="node-legend"></div>
-        <P> End Node</P>
-        <div id="end-legend" class="node-legend"></div>
-        <p> Wall </p>
-        <div id="wall-legend" class="node-legend"></div>
-
-        <button (click)="this.visualizeDijkstra()"
+<div class="container">
+      <!-- //TODO rename buttons class -->
+  
+    <div id="pf-options" class="toolbar">
+        <button (click)="this.visualize()"
         [disabled]="needReset || animating"
         > Visualize </button>
     
@@ -20,31 +15,77 @@
         <!-- <button (click)="this.stop()"
         [disabled]="!animating">
         Stop</button> -->
-      
-        <p>Speed: </p>
-        <select class="select" name="animeSpeed" [(ngModel)]="animeSpeed">
-            <label for="animeSpeed"> Speed:</label>
-            <option *ngFor="let option of animeSpeedOptions; last as last" 
+        <p>Algorithm: </p>
+        <select class="select" name="currentAlgorithm" [(ngModel)]="currentAlgorithm">
+            <option *ngFor="let option of algorithmOptions" 
             [value]=option.value
             > 
                 {{option.name}}
             </option>
         </select>
-      
+        <button class="tooltip" (click)="showInfo()">
+        ?
+        </button>
+        <p>Speed: </p>
+        <select class="select" name="animeSpeed" [(ngModel)]="animeSpeed">
+            <option *ngFor="let option of animeSpeedOptions" 
+            [value]=option.value
+            > 
+                {{option.name}}
+            </option>
+        </select>
     </div>
- 
-    <div class="grid-row" #allNodes *ngFor="let row of grid; let last = last">
-        <app-node *ngFor="let node of row" 
-            [col]=node.col
-            [row]=node.row
-            [isStart]=node.isStart
-            [isFinish]=node.isFinish
-            [isWall]=node.isWall
-            (mousedown)="this.handleMouseDown(node.row,node.col)"
-            (mouseover)="this.handleMouseOver(node.row,node.col)"
-            (mouseup)="this.handleMouseUp()"
-        ></app-node>
+    <div class="grid">
+        <div class="grid-row" #allNodes *ngFor="let row of grid; let last = last">
+            <app-node *ngFor="let node of row" 
+                [col]=node.col
+                [row]=node.row
+                [isStart]=node.isStart
+                [isFinish]=node.isFinish
+                [isWall]=node.isWall
+                (mousedown)="this.handleMouseDown(node.row,node.col)"
+                (mouseover)="this.handleMouseOver(node.row,node.col)"
+                (mouseup)="this.handleMouseUp()"
+            ></app-node>
+        </div>
+    </div>
+    
+
+    <div id="legend" class="toolbar"> 
+        <p> Start Node </p>
+        <div id="start-legend" class="node-legend"></div>
+        <P> End Node</P>
+        <div id="end-legend" class="node-legend"></div>
+        <p> Wall </p>
+        <div id="wall-legend" class="node-legend"></div>
     </div>
 
+    <div id="explanation">
+        <figure>
+            <figcaption>Instructions</figcaption>
+            <ol style="text-align: left;">
+                <li>
+                    The end node can be moved by dragging and dropping it.
+                </li>
+                <li>
+                    Walls can be made to alter the path by clicking and holding the mouse button over empty nodes.
+                </li>
+            </ol>
+        </figure>
+        <div *ngIf="displayExplanation">
+            <p *ngIf="currentAlgorithm==='dfs'">
+                Depth first search is the least efficient of the available algorithms. My iterative implementation choose an adjacent node and repeats choosing that node's adjacent nodes. It does this until a node with no unvisited adjacent nodes or the target node is reached. Since the algorithm commits to a path based on whichever adjacent node it chooses initially, and that path may be moving away from the target, it is inefficient. Additionally, it is not guaranteed to return the shortest path since it travels in only one direction at a time.  
+            </p>
+            <p *ngIf="currentAlgorithm==='bfs'">
+                Breadth first search is an unweighted version of Djikstra's shortest path algorithm. At each iteration, it updates all reachable nodes with their distance from the start node. It is guaranteed to return the shortest path since it sorts all of the unvisited nodes greedily by their distance from the start node. 
+            </p>
+            <p *ngIf="currentAlgorithm==='dijkstra'">
+                Dijkstra's shortest path algorithm expands on breadth first search by allowing weighted vertices. At each iteration, it updates all reachable nodes with their distance from the start node. It is guaranteed to return the shortest path since it sorts all of the unvisited nodes greedily by their distance from the start node. 
+            </p>
+            <p *ngIf="currentAlgorithm==='a_star'">
+                The most efficient of the given algorithms, A* uses heuristics to choose the next node. Some of the possible metrics that can be used include Manhattan, Euclidean, and diagonal distances. At each iteration, one of these metrics is calculated for all reachable nodes and the next node to visit is chosen based on whichever produes the minimum value. In this sense, it is more analytical than the rest of the algorithms.
+            </p>
+        </div>
+    </div>
 
 </div>

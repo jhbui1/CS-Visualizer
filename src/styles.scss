@@ -5,6 +5,11 @@
     font-family: $base-font-family;
 }
 
+body {
+  margin: 0;
+  overflow-x: hidden;
+}
+
 .select {
   color: white;
   background-color:rgba(0,0,0,.85);

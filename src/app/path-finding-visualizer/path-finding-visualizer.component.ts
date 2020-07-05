@@ -1,6 +1,11 @@
 import { Component, OnInit, Input, ViewChildren, QueryList } from '@angular/core';
 import { Node } from '../../app-interfaces/node';
-import { dijkstra, getNodesInShortestPathOrder } from 'src/algorithms/dijkstra';
+import { dijkstra } from 'src/algorithms/dijkstra';
+import { a_star } from 'src/algorithms/a_star';
+import { bfs } from 'src/algorithms/bfs';
+import { dfs } from 'src/algorithms/dfs';
+
+import { getNodesInShortestPathOrder } from 'src/algorithms/ph_helpers';
 
 const START_NODE_ROW  = 10;
 const START_NODE_COL  = 15;
@@ -16,13 +21,15 @@ const NUM_ROWS = 20;
   styleUrls: ['./path-finding-visualizer.component.scss']
 })
 export class PathFindingVisualizerComponent implements OnInit {
-  grid          : Node[][];
-  mouseIsPressed: boolean = false;
-  animating     : boolean = false;
-  needReset     : boolean = false;
-  animeSpeed    : number = 1;
-  endNode       : Node;
-  dragging      : boolean = false;
+  grid              : Node[][];
+  mouseIsPressed    : boolean = false;
+  animating         : boolean = false;
+  needReset         : boolean = false;
+  animeSpeed        : number = 1;
+  endNode           : Node;
+  dragging          : boolean = false;
+  currentAlgorithm  : string = "dijkstra";
+  displayExplanation: boolean = false;
 
   animeSpeedOptions = [
     { name: "0.25x",value: .25},
@@ -30,6 +37,13 @@ export class PathFindingVisualizerComponent implements OnInit {
     { name: "1.0x",value: 1},
     { name: "1.5x",value: 1.5},
     { name: "2.0x",value: 2}
+  ]
+
+  algorithmOptions = [
+    { name: "Dijkstra", value: "dijkstra"},
+    { name: "A*", value: "a_star"},
+    { name: "Breadth First", value: "bfs"},
+    { name: "Depth First", value: "dfs"}
   ]
 
   constructor() { }
@@ -58,7 +72,7 @@ export class PathFindingVisualizerComponent implements OnInit {
    * @param visitedNodesInOrder nodes visited in dijkstra order
    * @param nodesInShortestPathOrder All nodes that are part of shortest path
    */
-  animateDijkstra(visitedNodesInOrder: Node[], nodesInShortestPathOrder: Node[],showDelay:boolean): void {
+  animate(visitedNodesInOrder: Node[], nodesInShortestPathOrder: Node[],showDelay:boolean): void {
     for (let i = 0; i <= visitedNodesInOrder.length; i++) {
       if (i === visitedNodesInOrder.length) {
         setTimeout(() => {
@@ -78,6 +92,11 @@ export class PathFindingVisualizerComponent implements OnInit {
    * @param nodesInShortestPathOrder All nodes that are part of shortest path
    */
   animateShortestPath(nodesInShortestPathOrder: Node[],showDelay:boolean): void {
+    //cancel if shortest path not found
+    if(this.endNode.previousNode === null) {
+      this.animating = false;
+      return;
+    }
     for (let i = 0; i < nodesInShortestPathOrder.length-1; i++) {
       setTimeout(() => {
         const node = nodesInShortestPathOrder[i];
@@ -89,23 +108,44 @@ export class PathFindingVisualizerComponent implements OnInit {
   }
 
 
-/**
- * calls dijkstra algorithm and passes visited node/shortest path info
- * @param animeDelay flag to allow animation delay
- */
-  visualizeDijkstra(animeDelay:boolean = true) {
+  /**
+   * calls dijkstra algorithm and passes visited node/shortest path info
+   * @param animeDelay flag to allow animation delay
+   */
+  visualize(animeDelay:boolean = true) {
     this.animating = true;
     const grid = this.grid;
     const startNode = grid[START_NODE_ROW][START_NODE_COL];
     const endNode = this.endNode;
-    const visitedNodesInOrder = dijkstra(grid,startNode,endNode);
-    const nodesInShortestPathOrder = getNodesInShortestPathOrder(endNode);
-    this.animateDijkstra(visitedNodesInOrder,nodesInShortestPathOrder, animeDelay);
+    let visitedNodesInOrder;
+    let nodesInShortestPathOrder;
+
+    switch (this.currentAlgorithm) {
+      case "dijkstra":
+        visitedNodesInOrder = dijkstra(grid,startNode,endNode);
+        break;
+      case "a_star": 
+        visitedNodesInOrder = a_star(grid,startNode,endNode);
+        break;
+      case "bfs":
+        visitedNodesInOrder = bfs(grid,startNode,endNode);
+        break;
+      case "dfs":
+        visitedNodesInOrder = dfs(grid,startNode,endNode);
+        break;
+    }
+    nodesInShortestPathOrder = getNodesInShortestPathOrder(endNode);
+    this.animate(visitedNodesInOrder,nodesInShortestPathOrder,animeDelay);
   }
 
   reset() {
     this.grid = this.getInitialGrid();
     this.needReset = false;
+  }
+
+  showInfo() {
+    this.displayExplanation = true;
+    
   }
 
   getInitialGrid() : Node[][] {
@@ -170,7 +210,7 @@ export class PathFindingVisualizerComponent implements OnInit {
       this.handleMouseUp()
     }
     this.dragging = false;
-    if(this.needReset) this.visualizeDijkstra(false)
+    if(this.needReset) this.visualize(false)
    }
   /**
    * adds drag event listener to end node
@@ -208,7 +248,8 @@ export class PathFindingVisualizerComponent implements OnInit {
       Infinity, //distance
       false, //visited
       false, //wall
-      null //Previous
+      null, //Previous
+      Infinity //f, for A*
     )
   }
 
