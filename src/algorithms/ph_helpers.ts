@@ -1,4 +1,4 @@
-import { Node } from "../app-interfaces/node";
+import { Node } from "../app/pathfinder/app-interfaces/node";
 
 /**
  * Returns adjacent unvisited neighbors

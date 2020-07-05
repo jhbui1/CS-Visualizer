@@ -1,0 +1,60 @@
+<div class="container">
+  
+    <div id="pf-options" class="toolbar">
+        <button (click)="this.visualize()"
+        [disabled]="needReset || animating"
+        > Visualize </button>
+    
+        <button (click)="this.insert()" 
+        [disabled]="animating"> 
+        Insert </button>
+
+        <button (click)="this.reset()" 
+        [disabled]="animating"> 
+        Reset </button>
+    
+        <!-- <button (click)="this.stop()"
+        [disabled]="!animating">
+        Stop</button> -->
+        <p>Structure: </p>
+        <select class="select" name="currentAlgorithm" [(ngModel)]="currentDS">
+            <option *ngFor="let option of dsOptions" 
+            [value]=option.value
+            > 
+                {{option.name}}
+            </option>
+        </select>
+        <button class="tooltip" (click)="showInfo()">
+        ?
+        </button>
+        <p>Speed: </p>
+        <select class="select" name="animeSpeed" [(ngModel)]="animeSpeed">
+            <option *ngFor="let option of animeSpeedOptions" 
+            [value]=option.value
+            > 
+                {{option.name}}
+            </option>
+        </select>
+    </div>
+
+    <textarea id="ds-values" placeholder="Enter comma separated values here"></textarea>
+
+    <div id="legend" class="toolbar"> 
+
+    </div>
+
+    <div id="explanation">
+        <figure>
+            <figcaption>Instructions</figcaption>
+            <ol style="text-align: left;">
+                <li>
+                    Enter the elements you would like to place in the structure separated by commas.
+                </li>
+            </ol>
+        </figure>
+        <div *ngIf="displayExplanation">
+          
+        </div>
+    </div>
+
+</div>

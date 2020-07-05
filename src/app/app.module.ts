@@ -4,19 +4,21 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { PathFindingVisualizerComponent } from './path-finding-visualizer/path-finding-visualizer.component';
-import { NodeComponent } from './node/node.component';
+import { PathfinderModule } from './pathfinder/pathfinder.module';
+import { HomeComponent } from './home/home.component';
+import { DataStructureModule } from './data-structure/data-structure.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    PathFindingVisualizerComponent,
-    NodeComponent
+    HomeComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    PathfinderModule,
+    DataStructureModule
   ],
   providers: [],
   bootstrap: [AppComponent]

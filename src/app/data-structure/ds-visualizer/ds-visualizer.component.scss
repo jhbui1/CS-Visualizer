@@ -1,0 +1,88 @@
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    height: 100vh;
+    
+    :hover {
+      cursor: pointer;
+    }
+}
+
+textarea {
+    width: 25vw;
+    height: 3em;
+}
+
+.node-legend {
+  height: 1.75vw;
+  width: 1.75vw;
+  border: 1px solid black;
+  margin-right: .5vw;
+}
+
+.toolbar {
+  width: 100%;
+  padding: 1vh;
+  margin-bottom: 2vh;
+  background-color: darkcyan;
+  display: flex;
+  flex-direction: row;
+  align-items:  center;
+  justify-content: center;
+
+  button {
+    width: auto;
+    padding-left: 2em;
+    padding-right: 2em;
+  }
+
+  select {
+    border-radius: 1em;
+  }
+
+  .tooltip {
+    padding: .2em;
+  }
+
+  p {
+    margin-right: .5vw;
+    font-weight: bold;
+  }
+
+  #start-legend {
+    background-color: green;
+  }
+
+  #end-legend {
+    background-color:  red;
+  }
+
+  #wall-legend {
+    background-color: darkblue;
+  }
+
+  .select {
+    margin-right: .5vw;
+  };
+}
+
+#legend {
+  margin-top: 2vh;
+}
+
+.grid-row {
+  line-height: 0;
+}
+
+#explanation {
+  text-align: center;
+  width: 75vw;
+  color: black;
+  font-weight: bold;
+  background-color: lightgray;
+  padding: 1em;
+  border-radius: 50vw;
+}
