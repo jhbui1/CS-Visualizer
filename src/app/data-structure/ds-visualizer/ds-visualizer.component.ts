@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { isNullOrUndefined, isNumber } from 'util';
+import { TreeNode } from '../ds-interfaces/tree-node';
+import { DsBusService } from '../ds-bus.service';
 
 @Component({
   selector: 'app-ds-visualizer',
@@ -7,13 +9,17 @@ import { isNullOrUndefined, isNumber } from 'util';
   styleUrls: ['./ds-visualizer.component.scss']
 })
 export class DsVisualizerComponent implements OnInit {
-  mouseIsPressed    : boolean = false;
-  animating         : boolean = false;
-  needReset         : boolean = false;
-  animeSpeed        : number = 1;
-  dragging          : boolean = false;
-  displayExplanation: boolean = false;
-  currentDS         : string = "bst";
+  mouseIsPressed    : boolean  = false;
+  animating         : boolean  = false;
+  needReset         : boolean  = false;
+  animeSpeed        : number   = 1;
+  dragging          : boolean  = false;
+  displayExplanation: boolean  = false;
+  currentDS         : string   = "trie";
+  data              : string[] = [];
+  dataBusSub;
+  root              : TreeNode;
+
 
   animeSpeedOptions = [
     { name: "0.25x",value: .25},
@@ -27,13 +33,16 @@ export class DsVisualizerComponent implements OnInit {
     { name: "Trie", value: "trie"},
     { name: "AVL Tree", value: "avl-tree"},
     { name: "Binary Search Tree", value: "bst"}
-
-
   ]
 
-  constructor() { }
+  constructor(
+    private dataBus: DsBusService    
+  ) { }
 
   ngOnInit(): void {
+    this.dataBusSub = this.dataBus.dataChange.subscribe((value) => {
+      this.data = value;
+    })
   }
 
   visualize() {
@@ -41,11 +50,16 @@ export class DsVisualizerComponent implements OnInit {
   }
 
   insert() {
-    const args = (document.getElementById("ds-values") as HTMLTextAreaElement).value;
-    const csv = parseArguments(args);
-    console.log(csv);
+    const textAreaInput = (document.getElementById("ds-values") as HTMLTextAreaElement);
+    if(this.dataBus.data.length === 0) {
+      this.dataBus.createData(parseArguments(textAreaInput.value));
+    } else {
+      this.dataBus.insertData(parseArguments(textAreaInput.value));
+    }
+    textAreaInput.value = "";
 
   }
+
 
   reset() {
 
@@ -56,6 +70,8 @@ export class DsVisualizerComponent implements OnInit {
   }
 }
 
-function parseArguments(args: string): number[] {
-  return args.split(',').filter(x=> (Number(x) || Number(x)===0) && x!=="").map(x=>+x);
+function parseArguments(args: string): string[] {
+  return args.split(',');
+  // returns all numbers;
+  // return args.split(',').filter(x=> (Number(x) || Number(x)===0) && x!=="").map(x=>+x);
 }

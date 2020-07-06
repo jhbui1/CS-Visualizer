@@ -5,6 +5,10 @@
     font-family: $base-font-family;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   overflow-x: hidden;
