@@ -9,6 +9,7 @@ export class NodeComponent implements OnInit {
   @Input() children;
   @Input() parent;
   @Input() value;
+  @Input() level;
 
   constructor() { }
 

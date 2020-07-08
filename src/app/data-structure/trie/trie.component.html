@@ -1,8 +1,11 @@
 <div class="trie container">
-    <app-node *ngFor="let node of allNodes"
+    <!-- <app-node *ngFor="let node of allNodes"
         [value] = "node.value"
         [parent] = "node.parent"
         [children] = "node.children"
+        class="level-{{node.level}}"
     >
-    </app-node>
+    </app-node> -->
+    <div id="trie-container">
+    </div>
 </div>
