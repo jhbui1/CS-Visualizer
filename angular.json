@@ -30,7 +30,9 @@
             "styles": [
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [
+              "./node_modules/p5/lib/p5.min.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -94,7 +96,9 @@
             "styles": [
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [
+              "./node_modules/p5/lib/p5.min.js"
+            ]
           }
         },
         "lint": {
