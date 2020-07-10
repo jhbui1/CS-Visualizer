@@ -4,7 +4,9 @@ export class TrieNode  {
         public parent     : TrieNode   = null,
         public children   : Map<string, TrieNode> = new Map<string, TrieNode>(),
         public isEndOfWord: boolean    = false,
-        public level      : number     = 0
+        public level      : number     = 0,
+        public x          : number     = 0,
+        public y          : number     = 0
     ) {}
 }
 

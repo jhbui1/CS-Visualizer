@@ -2,8 +2,13 @@ import { Component, OnInit, ɵɵstylePropInterpolate5 } from '@angular/core';
 import { DsBusService } from '../ds-bus.service';
 import { Subscription } from 'rxjs';
 import * as Trie from '../ds-interfaces/trie-node';
+import * as p5 from 'p5';
 
-declare var p5: any;
+// declare var p5: any;
+
+const CANVAS_WIDTH  = 500;
+const CANVAS_HEIGHT = 700;
+const NODE_RADIUS = 40;
 
 @Component({
   selector: 'app-trie',
@@ -29,14 +34,13 @@ export class TrieComponent implements OnInit {
       this.data=value;
       this.renderValues();
       this.allNodes = this.getAllNodes();
-      debugger;
     })
   }
 
   sketch(p: any) {
     let canvas;
     p.setup = () => {
-      canvas = p.createCanvas(595, 700);
+      canvas = p.createCanvas(CANVAS_WIDTH, CANVAS_HEIGHT);
       canvas.parent('trie-container');
       p.background(0);
     }
@@ -65,16 +69,42 @@ export class TrieComponent implements OnInit {
 
   getAllNodes() : Trie.TrieNode[] {
     let result = [];
+    this.root.x = CANVAS_WIDTH/2;
+    this.root.y = 16;
+    this.root.value="ROOT";
     let queue:Trie.TrieNode[] = [this.root];
+    
+    //keeps track of placed nodes perlevel
+    let currentLevel = this.root.level;
+    let i = 0;
+    let nodesInchildRow = this.nodesPerRow.get(currentLevel+1);
     while(Boolean(queue.length)) {
       let currentNode = queue.shift();
+      if(currentNode.level !== currentLevel) {
+        currentLevel = currentNode.level;
+        i = 0;
+        nodesInchildRow = this.nodesPerRow.get(currentLevel+1);
+      }
+      this.p5sketch.textAlign(p5.prototype.CENTER);
+      this.p5sketch.fill(255);
+      this.p5sketch.textSize(16);
+      this.p5sketch.text(currentNode.value,currentNode.x,currentNode.y);
+      this.p5sketch.stroke(255);
+      this.p5sketch.noFill();
+      this.p5sketch.ellipse(currentNode.x,currentNode.y,NODE_RADIUS,NODE_RADIUS);
       result.push(currentNode);
       for(const node of currentNode.children.values()) {
+        node.y = currentNode.y+1.5*NODE_RADIUS;
+        node.x = this.root.x-(Math.floor(nodesInchildRow)/2*NODE_RADIUS*2) + i*NODE_RADIUS*2; 
+        this.p5sketch.line(currentNode.x,currentNode.y+NODE_RADIUS/2,node.x,node.y-NODE_RADIUS/2);
+        i++;
         queue.push(node);
       }
     }
     return result;
   }
+
+ 
 
   ngOnDestroy() {
     this.dataBusSub.unsubscribe();
