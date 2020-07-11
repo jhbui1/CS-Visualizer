@@ -45,8 +45,10 @@ export class DsVisualizerComponent implements OnInit {
     })
   }
 
-  visualize() {
-
+  find() {
+    const textAreaInput = (document.getElementById("ds-values") as HTMLTextAreaElement);
+    const searchWord = textAreaInput.value.trim();
+    this.dataBus.findData(searchWord);
   }
 
   insert() {
@@ -62,11 +64,12 @@ export class DsVisualizerComponent implements OnInit {
 
 
   reset() {
-
+    this.dataBus.clearData();
   }
 
   showInfo() {
-
+    const helpSection = document.getElementById('explanation');
+    helpSection.scrollIntoView({behavior:'smooth'});
   }
 }
 

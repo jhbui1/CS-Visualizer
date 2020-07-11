@@ -3,6 +3,14 @@
     --grid-rows: 1;
 }
 
+#status-container { 
+    font-weight: bold;
+    padding: 1em;
+    background-color: lightgray;
+    border-radius: .5em;
+    margin-bottom: 1vh;
+}
+
 #trie-container {
     display: grid;
     grid-gap: 1em;
@@ -14,6 +22,21 @@
     border-radius: 50%;
     padding: 1em;
     text-align: center;
+}
+
+#status-container {
+    text-align: center;
+}
+
+p {
+    margin: 0;
+    padding: .5em;
+    .found {
+        background-color: green;
+    }
+    .not-found {
+        background-color: red;
+    }
 }
 
 :host ::ng-deep .active {

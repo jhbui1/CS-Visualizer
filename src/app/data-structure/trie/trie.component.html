@@ -6,6 +6,16 @@
         class="level-{{node.level}}"
     >
     </app-node> -->
+    <div id="status-container">
+        <p class="status" *ngIf="searching" >Searching for: "{{searchWord}}" | 
+            <span *ngIf="found" class="found">Found</span>
+            <span *ngIf="!found" class="not-found">Not Found</span>
+
+        </p>
+        <p class="status" *ngIf="inserting">Inserting Word: "{{word}}"
+        </p>
+    </div>
+   
     <div id="trie-container">
     </div>
 </div>

@@ -7,6 +7,7 @@ import { Subject } from 'rxjs';
 export class DsBusService {
   data: string[] = [];
 
+  searchData : Subject<string> = new Subject<string>();
   dataChange : Subject<string[]> = new Subject<string[]>();
   
   constructor() { }
@@ -18,7 +19,16 @@ export class DsBusService {
 
   insertData(value: string[]) {
     this.data = this.data.concat(value);
-    this.dataChange.next(this.data);
+    this.dataChange.next(value);
+  }
+
+  clearData() {
+    this.data = [];
+    this.dataChange.next(null);
+  }
+
+  findData(word: string) {
+    this.searchData.next(word);
   }
 
 }
