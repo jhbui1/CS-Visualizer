@@ -4,15 +4,18 @@ import { DsVisualizerComponent } from './ds-visualizer/ds-visualizer.component';
 import { FormsModule } from '@angular/forms';
 import { NodeComponent } from './node/node.component';
 import { TrieComponent } from './trie/trie.component';
+import { AppRoutingModule } from '../app-routing.module';
 
 @NgModule({
   declarations: [
     DsVisualizerComponent, 
     NodeComponent, 
-    TrieComponent],
+    TrieComponent
+  ],
   imports: [
     CommonModule,
-    FormsModule
+    FormsModule,
+    AppRoutingModule
   ],
   exports: [
     DsVisualizerComponent

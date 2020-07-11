@@ -1,6 +1,25 @@
 <div class="container">
   
     <div id="pf-options" class="toolbar">
+
+        <button (click)="this.redirectTo('home')"
+        class = "primary-button button"
+        > Home </button>
+
+        <select class="right-margin select" 
+        (change)="this.redirectTo($event.target.value)" >
+            <option [value]="'data-structures'">
+                Data Structures Visualizer
+            </option>
+            <option selected  [value]="'path-finder'">
+                Path Finding Visualizer
+            </option>
+            
+            <option [value]="'sorting'">
+                Sorting Visualizer
+            </option>
+        </select>
+
         <button (click)="this.visualize()"
         [disabled]="needReset || animating"
         > Visualize </button>
@@ -9,9 +28,7 @@
         [disabled]="animating"> 
         Reset </button>
     
-        <!-- <button (click)="this.stop()"
-        [disabled]="!animating">
-        Stop</button> -->
+
         <p>Algorithm: </p>
         <select class="select" name="currentAlgorithm" [(ngModel)]="currentAlgorithm">
             <option *ngFor="let option of algorithmOptions" 
@@ -24,7 +41,7 @@
         ?
         </button>
         <p>Speed: </p>
-        <select class="select" name="animeSpeed" [(ngModel)]="animeSpeed">
+        <select class="right-margin select" name="animeSpeed" [(ngModel)]="animeSpeed">
             <option *ngFor="let option of animeSpeedOptions" 
             [value]=option.value
             > 

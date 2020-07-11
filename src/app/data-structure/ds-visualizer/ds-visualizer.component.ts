@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { isNullOrUndefined, isNumber } from 'util';
 import { TreeNode } from '../ds-interfaces/tree-node';
 import { DsBusService } from '../ds-bus.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-ds-visualizer',
@@ -36,7 +36,8 @@ export class DsVisualizerComponent implements OnInit {
   ]
 
   constructor(
-    private dataBus: DsBusService    
+    private dataBus: DsBusService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -59,7 +60,11 @@ export class DsVisualizerComponent implements OnInit {
       this.dataBus.insertData(parseArguments(textAreaInput.value));
     }
     textAreaInput.value = "";
+  }
 
+  redirectTo(route: string) {
+    console.log(route);
+    this.router.navigate([route]);
   }
 
 

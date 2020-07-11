@@ -6,6 +6,7 @@ import { bfs } from 'src/algorithms/bfs';
 import { dfs } from 'src/algorithms/dfs';
 
 import { getNodesInShortestPathOrder } from 'src/algorithms/ph_helpers';
+import { Router } from '@angular/router';
 
 const START_NODE_ROW  = 10;
 const START_NODE_COL  = 15;
@@ -46,7 +47,13 @@ export class PathFindingVisualizerComponent implements OnInit {
     { name: "Depth First", value: "dfs"}
   ]
 
-  constructor() { }
+  constructor(
+    private router: Router
+  ) { }
+
+  redirectTo(route: string) {
+    this.router.navigate([route]);
+  }
 
   ngOnInit(): void {
     this.grid = this.getInitialGrid();

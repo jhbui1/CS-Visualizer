@@ -18,7 +18,7 @@ import { DataStructureModule } from './data-structure/data-structure.module';
     AppRoutingModule,
     FormsModule,
     PathfinderModule,
-    DataStructureModule
+    DataStructureModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
