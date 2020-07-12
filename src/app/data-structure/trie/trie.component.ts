@@ -1,4 +1,4 @@
-import { Component, OnInit, ɵɵstylePropInterpolate5 } from '@angular/core';
+import { Component, OnInit, ɵɵstylePropInterpolate5, Input } from '@angular/core';
 import { DsBusService } from '../ds-bus.service';
 import { Subscription } from 'rxjs';
 import * as Trie from '../ds-interfaces/trie-node';
@@ -10,6 +10,8 @@ import * as NodeAnim from '../ds-interfaces/p5-nodes-anims';
   styleUrls: ['./trie.component.scss']
 })
 export class TrieComponent implements OnInit {
+  @Input() multiplier: number;
+
   private data       : string[]
   private p5sketch   : NodeAnim.NodeAnim;
   private dataBusSub : Subscription;
@@ -29,7 +31,7 @@ export class TrieComponent implements OnInit {
 
   }
 
-  reinitializeComponent() {
+  initializeComponent() {
     this.root = new Trie.TrieNode();
     this.root.value = "ROOT";
     this.root.x = NodeAnim.CANVAS_WIDTH/2;
@@ -39,7 +41,7 @@ export class TrieComponent implements OnInit {
 
   ngOnInit(): void {
     this.p5sketch = new NodeAnim.NodeAnim();
-    this.reinitializeComponent();
+    this.initializeComponent();
    
     this.searchSub = this.dataBus.searchData.subscribe((searchWord) => {
       this.findWord(searchWord);
@@ -49,7 +51,7 @@ export class TrieComponent implements OnInit {
       this.data = data;
       this.p5sketch.background(0);
       if(data === null) {
-        this.reinitializeComponent();
+        this.initializeComponent();
       } else {
         const visitedNodes = this.insertIntoTrie(data);
         if(visitedNodes.length>0) 
@@ -71,7 +73,7 @@ export class TrieComponent implements OnInit {
     }
     setTimeout( ()=> {
       this.searching = false;
-    },(word.length+1)*500);
+    },(word.length+1)*500*this.multiplier);
   }
 
   /**
@@ -160,18 +162,18 @@ export class TrieComponent implements OnInit {
       setTimeout( () => {
         this.word = this.data[wordIdx];
         wordIdx++;
-        this.p5sketch.animatePath(1,visitedNodes[0],this.root);
+        this.p5sketch.animatePath(1,visitedNodes[0],this.root,this.multiplier);
         for (i=1;i<visitedNodes.length;i++) {
-          this.p5sketch.animatePath(i+1,visitedNodes[i],visitedNodes[i-1]);
+          this.p5sketch.animatePath(i+1,visitedNodes[i],visitedNodes[i-1],this.multiplier);
         }
       },previousDelay);
-      previousDelay = previousDelay + visitedNodes.length*500;
+      previousDelay = (previousDelay + visitedNodes.length*500) * this.multiplier;
     } 
     //reset word in status bar
     setTimeout (()=> {
       this.word = "";
       this.inserting = false;
-    },previousDelay);
+    },previousDelay * this.multiplier);
   }
 
   ngOnDestroy() {

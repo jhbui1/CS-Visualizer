@@ -55,9 +55,9 @@
 
     <textarea id="ds-values" placeholder="Enter comma separated values here"></textarea>
 
-    <app-trie *ngIf="currentDS==='trie'"></app-trie>
+    <app-trie [multiplier]="animeSpeed" *ngIf="currentDS==='trie'"></app-trie>
 
-    <app-heap *ngIf="currentDS==='heap'"></app-heap>
+    <app-heap [multiplier]="animeSpeed" *ngIf="currentDS==='heap'"></app-heap>
 
     <div id="legend" class="toolbar"> 
 

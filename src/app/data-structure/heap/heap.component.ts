@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { DsBusService } from '../ds-bus.service';
 import { Subscription } from 'rxjs';
 import { NodeAnim, CANVAS_WIDTH, CANVAS_HEIGHT, NODE_RADIUS } from '../ds-interfaces/p5-nodes-anims';
 import { Heap } from '../ds-interfaces/heap';
 import { TreeNode } from '../ds-interfaces/tree-node';
+import { StmtModifier } from '@angular/compiler';
 
 @Component({
   selector: 'app-heap',
@@ -11,9 +12,11 @@ import { TreeNode } from '../ds-interfaces/tree-node';
   styleUrls: ['./heap.component.scss']
 })
 export class HeapComponent implements OnInit {
+  @Input() multiplier: number; 
+
   dataBusSub: Subscription;
-  p5sketch: NodeAnim;
-  heap: Heap;
+  p5sketch  : NodeAnim;
+  heap      : Heap;
 
   constructor(
     private dataBus: DsBusService
@@ -23,32 +26,47 @@ export class HeapComponent implements OnInit {
     this.p5sketch = new NodeAnim();
     this.heap = new Heap();
     this.dataBusSub = this.dataBus.dataChange.subscribe( (data) => {
-      this.processHeapData(data);
+      if (data != null) {
+        this.processHeapData(data);
+      } else {
+        this.reset();
+      }
     });
   }
 
+  reset() {
+    this.heap.nodes = [];
+    this.drawAllNodes();
+  }
 
   /**
    * inserts values into heap returning paths used to insert the values
    * @param data 
    */
-  processHeapData(data: string[]) : TreeNode[][] {
+  processHeapData(data: string[]) {
     const stoi = data.filter(x=> (Number(x)|| Number(x)===0) && x!=="").map(x=>+x); 
-    if (stoi.length != data.length) { //check if input all succesffuly covnerted to nums
+    if (stoi.length == 0) {
       alert("Please only enter numbers");
-      return;
+    } else if (stoi.length != data.length) { //check if input all succesffuly covnerted to nums
+      alert("Please only enter numbers");
     } else {
-      let previousDelay = 0;
-      let path: TreeNode[];
-      for (const num of stoi) {
-        setTimeout(() => {
-          //draw previous tree
-          path = this.heap.insert(num);
-          this.drawAllNodes();
-          previousDelay = (path.length * 500) + previousDelay;
-          this.animatePath(path,num);
-        }, previousDelay);
-      }
+      this.insertData(stoi);
+    }
+  }
+  insertData(stoi: number[]) {
+    let previousDelay = 0;
+    let i = 0;
+    let path: TreeNode[];
+    for (const num of stoi) {
+      setTimeout(() => {
+        //draw previous tree
+        path = this.heap.insert(num);
+        this.drawAllNodes();
+        this.animatePath(path,num);
+      },previousDelay );
+      i++;
+      //assume on each insertion num is bubbled to top
+      previousDelay = Math.ceil(Math.floor(i)) * 1000 * this.multiplier + previousDelay;
     }
   }
 
@@ -69,14 +87,14 @@ export class HeapComponent implements OnInit {
       const parent = this.heap.getParentNode(visitedNodePath[i]);
       if ( Boolean(parent) ) {
         if (i == lastIdx) parent.newNode = true;
-        this.p5sketch.animatePath(i+1,parent,null);
+        this.p5sketch.animatePath(i+1,parent,null,this.multiplier);
       }
 
       //update start node after animating its parent
       if (i == 0) {
         setTimeout ( () => { 
           this.p5sketch.drawNode(visitedNodePath[0],visitedNodePath[0].value);
-        }, 800);
+        }, 800 * this.multiplier);
       }
       //if last visited node is not root, make its parent red to indicate path terminus
 

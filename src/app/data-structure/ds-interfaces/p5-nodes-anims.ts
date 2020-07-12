@@ -119,7 +119,8 @@ export class NodeAnim {
     animatePath(
         i          : number,
         currentNode: TreeNode,
-        parentNode : TreeNode
+        parentNode : TreeNode,
+        multiplier : number = 1
     ) {
         //
         setTimeout( ()=> {
@@ -133,13 +134,13 @@ export class NodeAnim {
                 currentNode.newNode = false;
             }
             this.p5sketch.ellipse(currentNode.x,currentNode.y,NODE_RADIUS,NODE_RADIUS);
-        },100+(i*500));
+        },(100+(i*500))*multiplier);
 
         setTimeout(() => {
             this.p5sketch.fill('black');
             this.p5sketch.ellipse(currentNode.x,currentNode.y,NODE_RADIUS,NODE_RADIUS);
             this.drawNode(currentNode);
-        },500+(i*500));
+        },(500+(i*500))*multiplier);
     }
 }
 
