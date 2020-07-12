@@ -6,6 +6,25 @@ export class Heap {
     constructor(
     ) {}
 
+
+    nodeIsRoot(node: TreeNode) : boolean {
+        return node.level == 0;
+    }
+
+    /**
+     * returns parent's index
+     * @param node 
+     */
+    calculateParentIdx(node: TreeNode): number {
+        const idx = this.nodes.indexOf(node);
+        return Math.floor((idx-1) / 2);
+    }
+
+    getParentNode(node : TreeNode): TreeNode {
+        if (this.nodeIsRoot(node)) return null;
+        return this.nodes[this.calculateParentIdx(node)];
+    }
+
     /**
      * Inserts value and returns visited nodes in order
      * @param value 
@@ -17,7 +36,6 @@ export class Heap {
             newNode: false,
             level  : Math.floor(Math.log2(this.nodes.length+1))
         });
-        visitedNodes.push(node);
         this.nodes.push(node);
         let nodeIdx = this.nodes.indexOf(node);
         let parentIdx = Math.floor((nodeIdx - 1) / 2);
@@ -35,6 +53,10 @@ export class Heap {
             nodeIdx = parentIdx;
             parentIdx = Math.floor((nodeIdx - 1) / 2);
         }
+
+        //push new node once it reachesits final position in heap array, so that all left neighbor contain the original value
+        visitedNodes.push(node);
+
         return visitedNodes;
     }
 

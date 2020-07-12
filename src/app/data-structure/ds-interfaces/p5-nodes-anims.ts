@@ -82,10 +82,14 @@ export class NodeAnim {
         this.p5sketch.textAlign(p5.prototype.CENTER);
         this.p5sketch.fill(255);
         this.p5sketch.textSize(16);
-        if (value === null)
+        if (value === null) {
             this.p5sketch.text(currentNode.value,currentNode.x,currentNode.y);
-        else 
+        }
+        else {
+            this.hideNode(currentNode);
+            this.p5sketch.fill(255);
             this.p5sketch.text(value,currentNode.x,currentNode.y);
+        }
         this.p5sketch.stroke(255);
         this.p5sketch.noFill();
         this.p5sketch.ellipse(currentNode.x,currentNode.y,NODE_RADIUS,NODE_RADIUS);
@@ -106,10 +110,6 @@ export class NodeAnim {
         },i*300);
     }
 
-    swapText(nodeA: TreeNode, nodeB: TreeNode) {
-
-    }
-
     /**
      * draws line from current node to node, sets the current node color to red and back to black
      * @param i , animation delay offset determine by order of visit
@@ -121,8 +121,10 @@ export class NodeAnim {
         currentNode: TreeNode,
         parentNode : TreeNode
     ) {
+        //
         setTimeout( ()=> {
-                this.drawNode(currentNode);
+            this.drawNode(currentNode);
+            if (parentNode != null)
                 this.connectNodes(parentNode,currentNode);
             if(!currentNode.newNode) {
                 this.p5sketch.fill('green');
@@ -131,13 +133,13 @@ export class NodeAnim {
                 currentNode.newNode = false;
             }
             this.p5sketch.ellipse(currentNode.x,currentNode.y,NODE_RADIUS,NODE_RADIUS);
-        },i*300);
+        },100+(i*500));
 
         setTimeout(() => {
             this.p5sketch.fill('black');
             this.p5sketch.ellipse(currentNode.x,currentNode.y,NODE_RADIUS,NODE_RADIUS);
             this.drawNode(currentNode);
-        }, i*500);
+        },500+(i*500));
     }
 }
 

@@ -4,7 +4,6 @@ import { Subscription } from 'rxjs';
 import { NodeAnim, CANVAS_WIDTH, CANVAS_HEIGHT, NODE_RADIUS } from '../ds-interfaces/p5-nodes-anims';
 import { Heap } from '../ds-interfaces/heap';
 import { TreeNode } from '../ds-interfaces/tree-node';
-import { pathToFileURL } from 'url';
 
 @Component({
   selector: 'app-heap',
@@ -49,26 +48,43 @@ export class HeapComponent implements OnInit {
           previousDelay = (path.length * 500) + previousDelay;
           this.animatePath(path,num);
         }, previousDelay);
-
       }
     }
   }
 
+  /**
+   * 
+   * @param visitedNodePath path inserted node takes by swapping with parent if it is greater than it
+   * @param num 
+   */
   animatePath(visitedNodePath: TreeNode[],num:number) {
-    let currentIdx = this.heap.nodes.length-1;
-    let parentIdx = Math.floor((currentIdx-1)/2);
-    //draw first node containing insereted value
-    this.p5sketch.drawNode(visitedNodePath[0],"");
-    this.p5sketch.drawNode(visitedNodePath[0],String(num));
-
-    for(let i=1;i<visitedNodePath.length;i++) {
+    let i;
+    const lastIdx = visitedNodePath.length - 1;
+    for(i=0;i<visitedNodePath.length;i++) {
       //swap parents value with current value
-      this.p5sketch.drawNode(visitedNodePath[i],visitedNodePath[i-1].value);
+      const oldValue = i == 0 ? String(num) : visitedNodePath[i-1].value;
+      this.p5sketch.drawNode(visitedNodePath[i],oldValue);
 
-      //go up to parent, make green if swap, red if not
-      this.p5sketch.animatePath(i,visitedNodePath[i],visitedNodePath[i+1])
-      
+      //go up to parent, flash green if swapped, red if not
+      const parent = this.heap.getParentNode(visitedNodePath[i]);
+      if ( Boolean(parent) ) {
+        if (i == lastIdx) parent.newNode = true;
+        this.p5sketch.animatePath(i+1,parent,null);
+      }
+
+      //update start node after animating its parent
+      if (i == 0) {
+        setTimeout ( () => { 
+          this.p5sketch.drawNode(visitedNodePath[0],visitedNodePath[0].value);
+        }, 800);
+      }
+      //if last visited node is not root, make its parent red to indicate path terminus
+
     }
+  }
+
+  nodeIsRoot(node: TreeNode) : boolean {
+    return node.level == 0;
   }
 
   drawAllNodes() {
