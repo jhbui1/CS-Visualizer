@@ -1,11 +1,5 @@
 <div class="trie container">
-    <!-- <app-node *ngFor="let node of allNodes"
-        [value] = "node.value"
-        [parent] = "node.parent"
-        [children] = "node.children"
-        class="level-{{node.level}}"
-    >
-    </app-node> -->
+    
     <div id="status-container">
         <p class="status" *ngIf="searching" >Searching for: "{{searchWord}}" | 
             <span *ngIf="found" class="found">Found</span>
@@ -16,6 +10,5 @@
         </p>
     </div>
    
-    <div id="trie-container">
-    </div>
+    <div id="p5-content"></div>
 </div>

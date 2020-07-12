@@ -7,6 +7,7 @@ import { Subject } from 'rxjs';
 export class DsBusService {
   data: string[] = [];
 
+  //use two subjects to differentiate between inserted and requested data
   searchData : Subject<string> = new Subject<string>();
   dataChange : Subject<string[]> = new Subject<string[]>();
   

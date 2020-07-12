@@ -15,7 +15,7 @@ export class DsVisualizerComponent implements OnInit {
   animeSpeed        : number   = 1;
   dragging          : boolean  = false;
   displayExplanation: boolean  = false;
-  currentDS         : string   = "trie";
+  currentDS         : string   = "heap";
   data              : string[] = [];
   dataBusSub;
   root              : TreeNode;
@@ -30,8 +30,8 @@ export class DsVisualizerComponent implements OnInit {
   ]
 
   dsOptions = [
+    { name: "Heap", value: "heap"},
     { name: "Trie", value: "trie"},
-    { name: "AVL Tree", value: "avl-tree"},
     { name: "Binary Search Tree", value: "bst"}
   ]
 

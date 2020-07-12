@@ -1,14 +1,25 @@
-export class TrieNode  {
+import { TreeNode } from './tree-node';
+
+export class TrieNode extends TreeNode {
     constructor( 
-        public value      : string     = "",
-        public parent     : TrieNode   = null,
+        value      : string     = "",
+        parent     : TreeNode   = null,
         public children   : Map<string, TrieNode> = new Map<string, TrieNode>(),
         public isEndOfWord: boolean    = false,
-        public level      : number     = 0,
-        public x          : number     = 0,
-        public y          : number     = 0,
-        public newNode    : boolean    = true
-    ) {}
+        level      : number     = 0,
+        x          : number     = 0,
+        y          : number     = 0,
+        newNode    : boolean    = true
+    ) {
+      super({
+        value  : value,
+        parent : parent,
+        x      : x,
+        y      : y,
+        level  : level,
+        newNode: newNode
+      });
+    }
 }
 
 /**

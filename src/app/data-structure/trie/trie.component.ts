@@ -3,8 +3,6 @@ import { DsBusService } from '../ds-bus.service';
 import { Subscription } from 'rxjs';
 import * as Trie from '../ds-interfaces/trie-node';
 import * as NodeAnim from '../ds-interfaces/p5-nodes-anims';
-import * as p5 from 'p5';
-
 
 @Component({
   selector: 'app-trie',
@@ -15,14 +13,15 @@ export class TrieComponent implements OnInit {
   private data       : string[]
   private p5sketch   : NodeAnim.NodeAnim;
   private dataBusSub : Subscription;
+  private searchSub  : Subscription; 
   private root       : Trie.TrieNode = new Trie.TrieNode();
   private nodesPerRow: Map<number, number> = new Map<number, number>();
 
-  word       : string  = "";
-  searchWord : string  = "";
-  inserting  : boolean = false;
-  searching  : boolean = false;
-  found      : boolean = false
+  word      : string  = "";
+  searchWord: string  = "";
+  inserting : boolean = false;
+  searching : boolean = false;
+  found     : boolean = false
 
   constructor(
     private dataBus : DsBusService
@@ -42,7 +41,7 @@ export class TrieComponent implements OnInit {
     this.p5sketch = new NodeAnim.NodeAnim();
     this.reinitializeComponent();
    
-    this.dataBus.searchData.subscribe((searchWord) => {
+    this.searchSub = this.dataBus.searchData.subscribe((searchWord) => {
       this.findWord(searchWord);
     })
    // when data changes, redraw all nodes, hide nodes on path of inserted word and animate them
@@ -157,6 +156,7 @@ export class TrieComponent implements OnInit {
           this.p5sketch.hideNode(visitedNodes[i],visitedNodes[i-1]);
       }
 
+      //animate nodes part of inserted/search word
       setTimeout( () => {
         this.word = this.data[wordIdx];
         wordIdx++;
@@ -167,6 +167,7 @@ export class TrieComponent implements OnInit {
       },previousDelay);
       previousDelay = previousDelay + visitedNodes.length*500;
     } 
+    //reset word in status bar
     setTimeout (()=> {
       this.word = "";
       this.inserting = false;
@@ -175,6 +176,7 @@ export class TrieComponent implements OnInit {
 
   ngOnDestroy() {
     this.dataBusSub.unsubscribe();
+    this.searchSub.unsubscribe();
   }
 }
 

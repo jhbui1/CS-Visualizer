@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NodeComponent } from './node.component';
+import { HeapComponent } from './heap.component';
 
-describe('NodeComponent', () => {
-  let component: NodeComponent;
-  let fixture: ComponentFixture<NodeComponent>;
+describe('HeapComponent', () => {
+  let component: HeapComponent;
+  let fixture: ComponentFixture<HeapComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ NodeComponent ]
+      declarations: [ HeapComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(NodeComponent);
+    fixture = TestBed.createComponent(HeapComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
