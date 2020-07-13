@@ -12,6 +12,9 @@
 
     h1 {
         text-align: center;
+        color: white; 
+        margin-bottom: 4vh;
+        text-shadow: 1px 0 0 #000, 0 -1px 0 #000, 0 1px 0 #000, -1px 0 0 #000;
     }
 
     #head-banner {
@@ -48,8 +51,8 @@
     }
 
     #home-buttons {
-        height: 50vh;
-        width: 80vw;
+        height: 65vh;
+        width: 95vw;
         display: flex;
         flex-direction: column;
         justify-content: center;

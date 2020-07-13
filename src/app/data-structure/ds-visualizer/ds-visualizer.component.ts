@@ -1,14 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { TreeNode } from '../ds-interfaces/tree-node';
 import { DsBusService } from '../ds-bus.service';
 import { Router } from '@angular/router';
+import { HeapComponent } from '../heap/heap.component';
 
 @Component({
   selector: 'app-ds-visualizer',
   templateUrl: './ds-visualizer.component.html',
-  styleUrls: ['./ds-visualizer.component.scss']
+  styleUrls: [
+    './ds-visualizer.component.scss',
+    '../../shared/visualizer-container.scss'
+  ]
 })
 export class DsVisualizerComponent implements OnInit {
+  @ViewChild(HeapComponent) heapChild: HeapComponent;
+
   mouseIsPressed    : boolean  = false;
   animating         : boolean  = false;
   needReset         : boolean  = false;
@@ -19,7 +25,6 @@ export class DsVisualizerComponent implements OnInit {
   data              : string[] = [];
   dataBusSub;
   root              : TreeNode;
-
 
   animeSpeedOptions = [
     { name: "0.25x",value: 4},

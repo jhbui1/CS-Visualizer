@@ -7,6 +7,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { PathfinderModule } from './pathfinder/pathfinder.module';
 import { HomeComponent } from './home/home.component';
 import { DataStructureModule } from './data-structure/data-structure.module';
+import { SortModule } from './sort/sort.module';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { DataStructureModule } from './data-structure/data-structure.module';
     FormsModule,
     PathfinderModule,
     DataStructureModule,
+    SortModule
   ],
   providers: [],
   bootstrap: [AppComponent]

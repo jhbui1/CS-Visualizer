@@ -19,7 +19,10 @@ const NUM_ROWS = 20;
 @Component({
   selector: 'pathfinder-path-finding-visualizer',
   templateUrl: './path-finding-visualizer.component.html',
-  styleUrls: ['./path-finding-visualizer.component.scss']
+  styleUrls: [
+    './path-finding-visualizer.component.scss',
+    '../../shared/visualizer-container.scss'
+  ]
 })
 export class PathFindingVisualizerComponent implements OnInit {
   grid              : Node[][];

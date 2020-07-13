@@ -9,7 +9,8 @@ import { HeapComponent } from './heap/heap.component';
 @NgModule({
   declarations: [
     DsVisualizerComponent, 
-    TrieComponent, HeapComponent
+    TrieComponent, 
+    HeapComponent
   ],
   imports: [
     CommonModule,

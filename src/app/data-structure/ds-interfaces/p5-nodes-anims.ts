@@ -134,13 +134,13 @@ export class NodeAnim {
                 currentNode.newNode = false;
             }
             this.p5sketch.ellipse(currentNode.x,currentNode.y,NODE_RADIUS,NODE_RADIUS);
-        },(100+(i*500))*multiplier);
+        },(100+(i*700))*multiplier);
 
         setTimeout(() => {
             this.p5sketch.fill('black');
             this.p5sketch.ellipse(currentNode.x,currentNode.y,NODE_RADIUS,NODE_RADIUS);
             this.drawNode(currentNode);
-        },(500+(i*500))*multiplier);
+        },(700+(i*700))*multiplier);
     }
 }
 
