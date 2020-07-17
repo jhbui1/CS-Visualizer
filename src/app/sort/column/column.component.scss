@@ -1,0 +1,56 @@
+@import '../../../assets/css/mixins';
+
+:host {
+    --magnitude: 1vh;
+}
+
+#column-container {
+    border: 1px solid black;
+    margin: 0;
+    padding: 0;
+    width: calc(var(--magnitude) * 80vw);
+
+    @include large-screen-landscape {
+        width: auto;
+        height: calc(var(--magnitude) * 80vh);
+    }
+}
+
+:host {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    width: 95vw;
+
+    #after {
+        display: none;
+    }
+
+    p {
+        line-height: 100%;
+        border: 1px solid green;
+        min-width: 2.5em;
+        min-height: 2.5em;
+        font-weight: bolder;
+        font-size: smaller;
+        margin: 0;
+    }
+
+    @include large-screen-landscape {
+        writing-mode: vertical-rl;
+        text-align: right;
+        width: auto;
+
+        #before {
+            display: none;
+        }
+
+        #after {
+            display: block;
+        }
+
+        p {
+            min-width: auto;
+        }
+    }
+}

@@ -28,6 +28,7 @@
   flex-direction: row;
   align-items:  center;
   justify-content: center;
+  flex-wrap: wrap;
 
   button {
     width: auto;
@@ -37,10 +38,6 @@
 
   select {
     border-radius: 1em;
-  }
-
-  .tooltip {
-    padding: .2em;
   }
 
   p {
@@ -55,6 +52,11 @@
   .right-margin {
     margin-right: auto;
   };
+
+  .form-group {
+    display: flex;
+    margin-bottom: 1vh;
+  }
 }
 
 #legend {

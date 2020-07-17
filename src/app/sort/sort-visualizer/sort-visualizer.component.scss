@@ -1,0 +1,23 @@
+@import '../../../assets/css/mixins';
+
+label {
+    font-weight: bold;
+    margin-right: .1em;
+}
+
+#array-container {
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+
+    @include large-screen-landscape {
+        flex-direction: row;
+    }
+}
+
+input {
+    border-radius: 1vw;
+    margin-right: 1vw;
+    width: 7em;
+}

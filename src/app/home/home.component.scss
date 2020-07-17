@@ -1,3 +1,5 @@
+@import '../../assets/css/mixins';
+
 .container {
     width: 100vw;
     height: 100vh;
@@ -27,6 +29,7 @@
     }
 
     button {
+        margin-bottom: 1vh;
         height: 3em;
     }
 
@@ -54,10 +57,19 @@
         height: 65vh;
         width: 95vw;
         display: flex;
+        margin-bottom: 2vh;
+        position: relative;
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        margin-bottom: 2vh;
-        position: relative;
+    }
+
+    #buttons {
+        display: flex;
+        flex-direction: column;
+
+        @include medium-screen-landscape { 
+            flex-direction: row;
+        }
     }
 }

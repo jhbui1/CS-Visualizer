@@ -3,6 +3,12 @@
 @import 'assets/css/variables.scss';
 * {
     font-family: $base-font-family;
+    font-size: small;
+
+    @include medium-screen-landscape {
+      font-size: medium;
+    }
+
 }
 
 * {
@@ -19,18 +25,12 @@ body {
   background-color:rgba(0,0,0,.85);
   border-style: solid;
   border: solid white;
-  // padding:6.5vw;
-  // width: 15vw;
-  // height: 15vh;
-  // margin-bottom: 2vh;
-
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
   text-align:center;
   font-weight:bold;
-  font-size: 2vh;
 }
 .select:hover {
   cursor: pointer;

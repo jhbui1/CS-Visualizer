@@ -2,52 +2,60 @@
   
     <div id="pf-options" class="toolbar">
 
-        <button (click)="this.redirectTo('home')"
-        class = "primary-button button"
-        > Home </button>
+        <div class="form-group right-margin">
+            <button (click)="this.redirectTo('home')"
+            class = "primary-button button"
+            > Home </button>
 
-        <select class="right-margin select" 
-        (change)="this.redirectTo($event.target.value)" >
-            <option [value]="'data-structures'">
-                Data Structures Visualizer
-            </option>
-            <option selected  [value]="'path-finder'">
-                Path Finding Visualizer
-            </option>
-            
-            <option [value]="'sorting'">
-                Sorting Visualizer
-            </option>
-        </select>
+            <select class="select" 
+            (change)="this.redirectTo($event.target.value)" >
+                <option [value]="'data-structures'">
+                    Data Structures Visualizer
+                </option>
+                <option selected  [value]="'path-finder'">
+                    Path Finding Visualizer
+                </option>
+                
+                <option [value]="'sorting'">
+                    Sorting Visualizer
+                </option>
+            </select>
+        </div>
 
-        <button (click)="this.visualize()"
-        [disabled]="needReset || animating"
-        > Visualize </button>
+        <div class="form-group">
+            <button (click)="this.visualize()"
+            [disabled]="needReset || animating"
+            > Visualize </button>
+        
+            <button (click)="this.reset()" 
+            [disabled]="animating"> 
+            Reset </button>
+        </div>
     
-        <button (click)="this.reset()" 
-        [disabled]="animating"> 
-        Reset </button>
-    
-
-        <p>Algorithm: </p>
-        <select class="select" name="currentAlgorithm" [(ngModel)]="currentAlgorithm">
-            <option *ngFor="let option of algorithmOptions" 
-            [value]=option.value
-            > 
-                {{option.name}}
-            </option>
-        </select>
-        <button class="tooltip" (click)="showInfo()">
-        ?
-        </button>
-        <p>Speed: </p>
-        <select class="right-margin select" name="animeSpeed" [(ngModel)]="animeSpeed">
-            <option *ngFor="let option of animeSpeedOptions" 
-            [value]=option.value
-            > 
-                {{option.name}}
-            </option>
-        </select>
+        <div class="form-group">
+            <p>Algorithm: </p>
+            <select class="select" name="currentAlgorithm" [(ngModel)]="currentAlgorithm">
+                <option *ngFor="let option of algorithmOptions" 
+                [value]=option.value
+                > 
+                    {{option.name}}
+                </option>
+            </select>
+            <button class="tooltip" (click)="showInfo()">
+                ?
+            </button>
+        </div>
+     
+        <div class="form-group right-margin ">
+            <p>Speed: </p>
+            <select class="select" name="animeSpeed" [(ngModel)]="animeSpeed">
+                <option *ngFor="let option of animeSpeedOptions" 
+                [value]=option.value
+                > 
+                    {{option.name}}
+                </option>
+            </select>
+        </div>  
     </div>
     <div class="grid">
         <div class="grid-row" #allNodes *ngFor="let row of grid; let last = last">

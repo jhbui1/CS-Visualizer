@@ -1,55 +1,86 @@
 <div class="container">
   
     <div id="pf-options" class="toolbar">
+        <div class="form-group right-margin ">
+            <button (click)="this.redirectTo('home')"
+            class = "primary-button button"
+            > Home </button>
 
-        <button (click)="this.redirectTo('home')"
-        class = "primary-button button"
-        > Home </button>
+            <select class="select" 
+            (change)="this.redirectTo($event.target.value)" >
+                <option [value]="'data-structures'">
+                    Data Structures Visualizer
+                </option>
+                <option [value]="'path-finder'">
+                    Path Finding Visualizer
+                </option>
+                <option selected [value]="'sorting'">
+                    Sorting Visualizer
+                </option>
+            </select>
+        </div>
 
-        <select class="right-margin select" 
-        (change)="this.redirectTo($event.target.value)" >
-            <option [value]="'data-structures'">
-                Data Structures Visualizer
-            </option>
-            <option [value]="'path-finder'">
-                Path Finding Visualizer
-            </option>
-            <option selected [value]="'sorting'">
-                Sorting Visualizer
-            </option>
-        </select>
+        <div class="form-group">
+            <label for="magnitude">Max magnitude: </label>
+            <input 
+            id="mag-input"
+            (change)="this.updateArray()"
+            [(ngModel)]="maxValue"
+            type="number" min="0" max="1000"> 
+        </div>
+        
+        <div class="form-group">
+            <label for="arrSize">Array Size: </label>
+            <input 
+            name="arrSize"
+            id="size-input"
+            [(ngModel)]="arraySize"
+            #arrSize
+            (change)="this.updateArray()" 
+            type="number" min="0" max="100"> 
+        </div>  
 
-        <button (click)="this.sort()"
-        [disabled]="animating"
-        > Sort </button>
-    
-        <button (click)="this.reset()" 
-        [disabled]="animating"> 
-        Reset </button>
-    
+        <div class="form-group">
+            <button (click)="this.sort()"
+            [disabled]="animating"
+            > Sort </button>
+        
+            <button (click)="this.reset()" 
+            [disabled]="animating"> 
+            Reset </button>
+        </div>
 
-        <p>Algorithm: </p>
-        <select class="select" name="currentAlgorithm" [(ngModel)]="currentAlgorithm">
-            <option *ngFor="let option of algorithmOptions" 
-            [value]=option.value
-            > 
-                {{option.name}}
-            </option>
-        </select>
-        <button class="tooltip" (click)="showInfo()">
-        ?
-        </button>
-        <p>Speed: </p>
-        <select class="right-margin select" name="animeSpeed" [(ngModel)]="animeSpeed">
-            <option *ngFor="let option of animeSpeedOptions" 
-            [value]=option.value
-            > 
-                {{option.name}}
-            </option>
-        </select>
+        <div class="form-group">
+            <p>Algorithm: </p>
+            <select class="select" name="currentAlgorithm" [(ngModel)]="currentAlgorithm">
+                <option *ngFor="let option of algorithmOptions" 
+                [value]=option.value
+                > 
+                    {{option.name}}
+                </option>
+            </select>
+            <button class="tooltip" (click)="showInfo()">
+                ?
+            </button>
+        </div>
+
+        <div class="right-margin form-group">
+            <p>Speed: </p>
+            <select class=" select" name="animeSpeed" [(ngModel)]="animeSpeed">
+                <option *ngFor="let option of animeSpeedOptions" 
+                [value]=option.value
+                > 
+                    {{option.name}}
+                </option>
+            </select>
+        </div>  
     </div>
 
-    
+    <div id="array-container">
+        <div  id="array-content" #arrayContainer>
+
+        </div>
+    </div>
 
     <div id="legend" class="toolbar"> 
 
