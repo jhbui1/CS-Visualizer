@@ -30,8 +30,9 @@ export function mergeSort(
         mergeSort(columns,left,maxValue,offset,multiplier), 
         mergeSort(columns,right,maxValue,offset+middle,multiplier)
     );
-    const animDelay = 100;
-    const sectionDelay = section.length * animDelay;  
+
+    const animDelay = 100; //delay between class toggle
+    const sectionDelay = section.length * animDelay;  //delay between recursion levels
     //colorize section delimitiers
     setTimeout( () => {
         columns[offset].instance.toggleClass('section-delimiter');

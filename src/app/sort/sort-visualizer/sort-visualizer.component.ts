@@ -2,6 +2,7 @@ import { Component, OnInit, ComponentFactoryResolver, ViewChild, ViewContainerRe
 import { Router } from '@angular/router';
 import { ColumnComponent } from '../column/column.component';
 import { mergeSort } from '../algorithms/merge-sort';
+import { quickSort } from '../algorithms/quick-sort';
 
 @Component({
   selector: 'app-sort-visualizer',
@@ -18,7 +19,7 @@ export class SortVisualizerComponent implements OnInit {
   animeSpeed        : number = 1;
   endNode           : Node;
   dragging          : boolean = false;
-  currentAlgorithm  : string = "merge";
+  currentAlgorithm  : string = "quick";
   displayExplanation: boolean = false;
   columnRefs        : ComponentRef<ColumnComponent>[] = [];
 
@@ -94,6 +95,8 @@ export class SortVisualizerComponent implements OnInit {
         this.maxValue,0,this.animeSpeed);
         break;
       case 'quick':
+        quickSort(this.columnRefs,0,this.arraySize-1,this.animeSpeed);
+        debugger;
         break;
       case 'insertion':
         break;
