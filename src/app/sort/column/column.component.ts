@@ -29,4 +29,10 @@ export class ColumnComponent implements OnInit{
 
   ngOnInit(): void {
   }
+
+  toggleClass(className:string) {
+    const host = document.getElementById(this.id);
+    const container = host.children[1];
+    container.classList.toggle(className);
+  }
 }
