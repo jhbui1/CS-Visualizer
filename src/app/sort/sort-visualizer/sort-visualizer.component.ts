@@ -1,8 +1,13 @@
 import { Component, OnInit, ComponentFactoryResolver, ViewChild, ViewContainerRef, ComponentFactory, ComponentRef } from '@angular/core';
+import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { Router } from '@angular/router';
+
 import { ColumnComponent } from '../column/column.component';
 import { mergeSort } from '../algorithms/merge-sort';
 import { quickSort } from '../algorithms/quick-sort';
+import { insertionSort } from '../algorithms/insertion-sort';
+import { radixSort } from '../algorithms/radix-sort';
+import { BucketService } from '../bucket.service';
 
 @Component({
   selector: 'app-sort-visualizer',
@@ -10,7 +15,10 @@ import { quickSort } from '../algorithms/quick-sort';
   styleUrls: [
     './sort-visualizer.component.scss',
     '../../shared/visualizer-container.scss'
-]
+  ],
+  providers: [
+    Location, {provide: LocationStrategy, useClass: PathLocationStrategy}
+  ]
 })
 export class SortVisualizerComponent implements OnInit {
   maxValue          : number = 200;
@@ -19,7 +27,7 @@ export class SortVisualizerComponent implements OnInit {
   animeSpeed        : number = 1;
   endNode           : Node;
   dragging          : boolean = false;
-  currentAlgorithm  : string = "quick";
+  currentAlgorithm  : string = "radix";
   displayExplanation: boolean = false;
   columnRefs        : ComponentRef<ColumnComponent>[] = [];
 
@@ -43,7 +51,8 @@ export class SortVisualizerComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private resolver: ComponentFactoryResolver
+    private resolver: ComponentFactoryResolver,
+    private bucketService: BucketService
   ) { }
 
   ngOnInit(): void {
@@ -84,7 +93,7 @@ export class SortVisualizerComponent implements OnInit {
   }
 
   reset() {
-    this.generateArray();
+    location.reload();
   }
 
   sort() {
@@ -96,11 +105,12 @@ export class SortVisualizerComponent implements OnInit {
         break;
       case 'quick':
         quickSort(this.columnRefs,0,this.arraySize-1,this.animeSpeed);
-        debugger;
         break;
       case 'insertion':
+        insertionSort(this.columnRefs,this.columnRefs.map(x => x.instance.magnitude),this.maxValue,this.animeSpeed);
         break;
       case 'radix':
+        radixSort(this.columnRefs,this.columnRefs.map(x => x.instance.value),this.bucketService);
         break;
     }
     this.animating = false;

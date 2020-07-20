@@ -45,8 +45,7 @@
             [disabled]="animating"
             > Sort </button>
         
-            <button (click)="this.reset()" 
-            [disabled]="animating"> 
+            <button (click)="this.reset()"> 
             Reset </button>
         </div>
 
@@ -82,25 +81,22 @@
         </div>
     </div>
 
+    <app-radix *ngIf="currentAlgorithm==='radix'"></app-radix>
     <div id="legend" class="toolbar"> 
 
     </div>
 
     <div id="explanation">
-        <figure>
-            <figcaption>Instructions</figcaption>
-            <ol style="text-align: left;">
-              
-            </ol>
-        </figure>
+        <h3>Explanation</h3>
         <div *ngIf="displayExplanation">
-            <p *ngIf="currentAlgorithm==='dfs'">
+            <p *ngIf="currentAlgorithm==='merge'">
+
             </p>
-            <p *ngIf="currentAlgorithm==='bfs'">
+            <p *ngIf="currentAlgorithm==='quick'">
             </p>
-            <p *ngIf="currentAlgorithm==='dijkstra'">
+            <p *ngIf="currentAlgorithm==='radix'">
             </p>
-            <p *ngIf="currentAlgorithm==='a_star'">
+            <p *ngIf="currentAlgorithm==='djikstra'">
             </p>
         </div>
     </div>

@@ -1,0 +1,20 @@
+:host{
+    margin-top: 3vh;
+    margin-bottom: 3vh;
+    min-height: 50vh;
+    width: 80vw;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+}
+
+.bucket {
+    border: 1px solid black;
+    padding: 1vw;
+    margin-right: 4vw;
+}
+
+.value {
+    border: 1px solid black;
+}

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input,  ElementRef} from '@angular/core';
+import { Component, OnInit, Input,  ElementRef, ChangeDetectorRef} from '@angular/core';
 
 
 
@@ -24,10 +24,12 @@ export class ColumnComponent implements OnInit{
   private _magnitude;
 
   constructor(
-    private elementRef: ElementRef
+    private elementRef: ElementRef,
+    private cdr: ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
+    this.cdr.detectChanges();
   }
 
   toggleClass(className:string) {
