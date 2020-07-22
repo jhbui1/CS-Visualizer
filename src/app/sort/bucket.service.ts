@@ -12,6 +12,7 @@ export interface BucketUpdate {
 })
 export class BucketService {
 
+  animDelay: number = 100;
   bucketData: Subject<BucketUpdate> = new Subject<BucketUpdate>();
 
   constructor() { }
@@ -26,5 +27,9 @@ export class BucketService {
   insert(radix:number,bucket:number,value:number) {
     const update: BucketUpdate = {radix,bucket,value};
     this.bucketData.next(update);
+  }
+
+  remove() {
+      this.bucketData.next(null);
   }
 }

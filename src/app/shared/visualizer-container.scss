@@ -68,7 +68,6 @@
 }
 
 #explanation {
-  text-align: center;
   width: 75vw;
   color: black;
   font-weight: bold;
@@ -76,4 +75,14 @@
   padding: 1em;
   border-radius: 50vw;
   margin-bottom: 5vh;  
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: left;
+}
+
+#explanation-content,figure {
+  text-align: left;
+  width: 80%;
 }

@@ -95,8 +95,20 @@
                 </li>
             </ol>
         </figure>
-        <div *ngIf="displayExplanation">
-          
+        <div id="explanation-content" *ngIf="displayExplanation">
+            <h3>Explanation</h3>
+            <div *ngIf="currentDS==='heap'">
+                <p>
+                    A Heap is a special Tree-based data structure in which the tree is a complete binary tree. Generally, Heaps can be of two types:
+                </p>
+            </div>
+            <div *ngIf="currentDS==='trie'">
+                <p>
+                    Trie is an efficient information re<strong>Trie</strong>val data structure. Using Trie, search complexities can be brought to optimal limit (key length). If we store keys in binary search tree, a well balanced BST will need time proportional to M * log N, where M is maximum string length and N is 
+                    number of keys in tree. Using Trie, we can search the key in O(M) time. However the penalty is on Trie storage requirements (Please refer Applications of Trie for more details)
+                </p>
+            </div>
+
         </div>
     </div>
 

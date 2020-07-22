@@ -155,7 +155,6 @@ export class PathFindingVisualizerComponent implements OnInit {
 
   showInfo() {
     this.displayExplanation = true;
-
   }
 
   getInitialGrid() : Node[][] {

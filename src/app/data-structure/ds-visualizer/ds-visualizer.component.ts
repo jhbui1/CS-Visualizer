@@ -37,7 +37,6 @@ export class DsVisualizerComponent implements OnInit {
   dsOptions = [
     { name: "Heap", value: "heap"},
     { name: "Trie", value: "trie"},
-    { name: "Binary Search Tree", value: "bst"}
   ]
 
   constructor(
@@ -78,8 +77,9 @@ export class DsVisualizerComponent implements OnInit {
   }
 
   showInfo() {
+    this.displayExplanation = true;
     const helpSection = document.getElementById('explanation');
-    helpSection.scrollIntoView({behavior:'smooth'});
+    helpSection.scrollIntoView({behavior:'smooth',block:'center'});
   }
 }
 

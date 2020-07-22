@@ -1,6 +1,12 @@
 <div class="bucket" *ngFor="let i of bucketKeys">
-    <div class="value" *ngFor="let j of buckets.get(i)">
-        {{j}}
+    <div id="{{'bucket-' + i + '-idx-' + bucketIdx}}" class="value" *ngFor="let j of buckets.get(i);let bucketIdx = index">
+        <p> 
+            <span 
+            class="{{'radix-' + (String(j).length - radix- 1)}}" 
+            *ngFor="let c of String(j); let radix = index">
+            {{c}}
+            </span>
+        </p>
     </div>
     {{i}}
 </div>

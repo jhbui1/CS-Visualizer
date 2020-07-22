@@ -2,11 +2,13 @@ import { BucketService } from '../bucket.service';
 
 export function radixSort(columns: import("@angular/core").ComponentRef<import("../column/column.component").ColumnComponent>[],
     values: number[],
+    maxValue: number,
+    multiplier: number,
     bucketService: BucketService
 ) {
-    console.log(values);
     let delay = 0;
-    let animDelay = 100;
+    let animDelay = 100 * multiplier;
+    bucketService.animDelay = animDelay;
 
     let maxLength = largestNum(values);
 
@@ -19,14 +21,37 @@ export function radixSort(columns: import("@angular/core").ComponentRef<import("
         if (num !== undefined) {
             buckets[num].push(values[j]);
             setTimeout( (bucket,value) => {
+                columns[j].instance.toggleClass('swapping');
                 bucketService.insert(i,bucket,value);
             },delay+animDelay,Number(num),values[j]);
             delay += animDelay;
+
+            setTimeout( () => {
+              columns[j].instance.toggleClass('swapping');
+            },delay+animDelay);
         }
       };
       values = buckets.flat();
+      //remove values from bucket
+      setTimeout( () => {
+        bucketService.remove();
+      },delay);
+
+      //set array to values in bucket
+      for (let i=0;i<values.length;i++) {
+        setTimeout ((value) => {
+          columns[i].instance.toggleClass('swapping');
+          columns[i].instance.magnitude = value/maxValue;
+          columns[i].instance.value = value;
+        },delay,values[i])
+        delay += animDelay;
+
+        setTimeout (() => {
+          columns[i].instance.toggleClass('swapping');
+        },delay)
+      }
     };
-    console.log(values)
+
     return values;
 }
 

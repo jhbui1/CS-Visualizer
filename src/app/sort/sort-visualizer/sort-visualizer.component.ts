@@ -110,7 +110,7 @@ export class SortVisualizerComponent implements OnInit {
         insertionSort(this.columnRefs,this.columnRefs.map(x => x.instance.magnitude),this.maxValue,this.animeSpeed);
         break;
       case 'radix':
-        radixSort(this.columnRefs,this.columnRefs.map(x => x.instance.value),this.bucketService);
+        radixSort(this.columnRefs,this.columnRefs.map(x => x.instance.value),this.maxValue,this.animeSpeed,this.bucketService);
         break;
     }
     this.animating = false;
@@ -135,6 +135,8 @@ export class SortVisualizerComponent implements OnInit {
 
   showInfo() {
     this.displayExplanation = true;
+    const helpSection = document.getElementById('explanation');
+    helpSection.scrollIntoView({behavior:'smooth',block:'center'});
   }
 
 }

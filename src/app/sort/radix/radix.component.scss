@@ -7,14 +7,32 @@
     flex-direction: row;
     align-items: flex-end;
     justify-content: space-between;
+    text-align: center;
+}
+
+p { 
+    margin: 0;
+    span {
+        margin: 0;
+        padding: 0;
+        width: 1em;
+        white-space: nowrap;
+    }
+}
+
+.highlight {
+    color: crimson;
 }
 
 .bucket {
     border: 1px solid black;
     padding: 1vw;
-    margin-right: 4vw;
 }
 
 .value {
     border: 1px solid black;
+}
+
+.remove { 
+    background-color: red;
 }

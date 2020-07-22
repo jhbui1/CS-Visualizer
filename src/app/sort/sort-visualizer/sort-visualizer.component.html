@@ -88,15 +88,42 @@
 
     <div id="explanation">
         <h3>Explanation</h3>
-        <div *ngIf="displayExplanation">
+        <div id='explanation-content' *ngIf="displayExplanation">
             <p *ngIf="currentAlgorithm==='merge'">
+                Like QuickSort, Merge Sort is a Divide and Conquer algorithm. It divides input array in two halves, calls itself for the two halves and then merges the two sorted halves. The merge() function is used for merging two halves. The merge(arr, l, m, r) 
+                is key process that assumes that arr[l..m] and arr[m+1..r] are sorted and merges the two sorted sub-arrays into one. See following C implementation for details.
+            </p>
+            <div *ngIf="currentAlgorithm==='quick'">
+                <p >
+                    Like Merge Sort, QuickSort is a Divide and Conquer algorithm. It picks an element as pivot and partitions the given array around the picked pivot. There are many different versions of quickSort that pick pivot in different ways.
+                </p>
+                <ul>   
+                    <li>
+                        Always pick first element as pivot.
+                    </li>
+                    <li>
+                        Always pick last element as pivot.
+                    </li>
+                    <li>
+                        Pick a random element as pivot.
+                    </li>
+                    <li>
+                        Pick median as pivot.
+                    </li>
+                </ul>
+            </div>
 
-            </p>
-            <p *ngIf="currentAlgorithm==='quick'">
-            </p>
             <p *ngIf="currentAlgorithm==='radix'">
+                The lower bound for Comparison based sorting algorithm (Merge Sort, Heap Sort, Quick-Sort .. etc) is Ω(nLogn), i.e., they cannot do better than nLogn.
+                Counting sort is a linear time sorting algorithm that sort in O(n+k) time when elements are in range from 1 to k.
+                <br><br>
+                <strong>What if the elements are in range from 1 to n2?</strong>
+                We can’t use counting sort because counting sort will take O(n2) which is worse than comparison based sorting algorithms. Can we sort such an array in linear time?
+                Radix Sort is the answer. The idea of Radix Sort is to do digit by digit sort starting from least significant digit to most significant digit. Radix sort uses counting sort as a subroutine to sort.
             </p>
-            <p *ngIf="currentAlgorithm==='djikstra'">
+            <p *ngIf="currentAlgorithm==='insertion'">
+                Insertion sort is a simple sorting algorithm that works the way we sort playing cards in our hands.
+                That is, we keep a sorted and unsorted side. When we pick a card to sort from the unsorted side, we can look from one end of the sorted side until we find the correct spot for the card.
             </p>
         </div>
     </div>
