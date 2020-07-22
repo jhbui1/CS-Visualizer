@@ -1,19 +1,15 @@
-import { Component, OnInit, Input,  ElementRef, ChangeDetectorRef} from '@angular/core';
+import { Component, OnInit, Input,  ElementRef, AfterViewInit} from '@angular/core';
 
 
 
 @Component({
   selector: 'app-column',
   templateUrl: './column.component.html',
-  styleUrls: ['./column.component.scss'],
-  host: {'[id]':'_id'}
+  styleUrls: ['./column.component.scss']
 })
-export class ColumnComponent implements OnInit{
+export class ColumnComponent implements AfterViewInit{
   @Input() index    : number;  //position in array
-  @Input() set id(id:string) {
-    this._id = id;
-    this.cdr.detectChanges();
-  }
+
   @Input() set magnitude(value:number ) {
     this.elementRef.nativeElement.style.setProperty('--magnitude',value);
     this._magnitude = value;
@@ -23,20 +19,20 @@ export class ColumnComponent implements OnInit{
   } 
 
   value: number;
-
-  private _id;
-  private _magnitude;
+  id: string;
+  
+  private _magnitude: number;
 
   constructor(
-    private elementRef: ElementRef,
-    private cdr: ChangeDetectorRef
+    private elementRef: ElementRef
   ) { }
 
-  ngOnInit(): void {
+  ngAfterViewInit(): void {
+    this.elementRef.nativeElement.id = this.id;
   }
 
   toggleClass(className:string) {
-    const host = document.getElementById(this._id);
+    const host = document.getElementById(this.id);
     const container = host.children[1];
     container.classList.toggle(className);
   }

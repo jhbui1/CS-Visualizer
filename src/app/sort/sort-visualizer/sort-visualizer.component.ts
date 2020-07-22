@@ -111,6 +111,7 @@ export class SortVisualizerComponent implements OnInit {
           componentRef.instance.magnitude = magnitude;
           componentRef.instance.value     = value;
           componentRef.instance.id        = `array-index-${index}`;
+          componentRef.changeDetectorRef.detectChanges();
     
     this.columnRefs.push(componentRef);
   }
