@@ -1,5 +1,3 @@
-@import '../../../assets/css/mixins';
-
 label {
     font-weight: bold;
     margin-right: .1em;
@@ -8,12 +6,8 @@ label {
 #array-container {
     min-height: 80vh;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: flex-end;
-
-    @include large-screen-landscape {
-        flex-direction: row;
-    }
 }
 
 input {

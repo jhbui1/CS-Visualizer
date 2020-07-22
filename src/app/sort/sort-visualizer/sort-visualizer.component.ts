@@ -23,6 +23,7 @@ import { BucketService } from '../bucket.service';
 export class SortVisualizerComponent implements OnInit {
   maxValue          : number = 200;
   arraySize         : number = 100;
+  maxArraySize      : number = 100;
   animating         : boolean = false;
   animeSpeed        : number = 1;
   endNode           : Node;
@@ -60,7 +61,29 @@ export class SortVisualizerComponent implements OnInit {
   }
 
   ngAfterViewInit() {
+    this.determineMaxSize(window.innerWidth);
     this.generateArray();
+  }
+
+  determineMaxSize(width:number) {
+    if (width <= 768) {
+      this.maxArraySize = 25;
+    }
+    else if (width <= 1250) {
+      this.maxArraySize = 50;
+    }
+    else if (width <= 1500) {
+      this.maxArraySize = 70;
+    }
+    else {
+      this.maxArraySize = 100;
+    }
+    if (this.maxArraySize > this.arraySize) {
+      this.arraySize = this.maxArraySize;
+      this.generateArray();
+    } else if(this.maxArraySize < this.arraySize){
+      this.deleteExtraColumns(this.maxArraySize);
+    }
   }
 
   generateArray() {
@@ -121,13 +144,13 @@ export class SortVisualizerComponent implements OnInit {
   }
 
   updateArray() {
-    if(this.arraySize < 0 || this.arraySize > 100) {
-      alert("Please enter a size between 0 and 100");
-      (document.getElementById('size-input') as HTMLInputElement).value="100";
+    if(this.arraySize < 0 || this.arraySize > this.maxArraySize) {
+      alert(`Please enter a size between 0 and ${this.maxArraySize}`);
+      (document.getElementById('size-input') as HTMLInputElement).value=String(this.maxArraySize);
     } 
     if(this.maxValue < 0 || this.maxValue > 1000) {
       alert("Please enter a size between 0 and 1000");
-      (document.getElementById('mag-input') as HTMLInputElement).value="100";
+      (document.getElementById('mag-input') as HTMLInputElement).value="1000";
     }
     this.generateArray();    
   }
@@ -139,8 +162,12 @@ export class SortVisualizerComponent implements OnInit {
     helpSection.scrollIntoView({behavior:'smooth',block:'center'});
   }
 
-}
+  deleteExtraColumns(start: number) {
+    this.arraySize = start;
+    for(let i=this.columnRefs.length-1;i>=start;i--) {
+      this.columnRefs[i].destroy();
+      this.columnRefs.pop();
+    }
+  }
 
-function getRandomInt(max) {
-  return Math.floor(Math.random() * Math.floor(max));
 }

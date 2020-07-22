@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" (window:resize)="determineMaxSize($event.target.innerWidth)">
   
     <div id="pf-options" class="toolbar">
         <div class="form-group right-margin ">
@@ -37,7 +37,7 @@
             [(ngModel)]="arraySize"
             #arrSize
             (change)="this.updateArray()" 
-            type="number" min="0" max="100"> 
+            type="number" min="0" [max]="maxArraySize"> 
         </div>  
 
         <div class="form-group">
